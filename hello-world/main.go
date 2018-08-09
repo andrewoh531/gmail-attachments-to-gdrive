@@ -1,45 +1,28 @@
 package main
 
 import (
-	"errors"
-	"fmt"
-	"io/ioutil"
-	"net/http"
+		"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"os"
 )
 
-var (
-	// DefaultHTTPGetAddress Default Address
-	DefaultHTTPGetAddress = "https://checkip.amazonaws.com"
 
-	// ErrNoIP No IP found in response
-	ErrNoIP = errors.New("No IP in HTTP response")
+func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, error) {
 
-	// ErrNon200Response non 200 status code in response
-	ErrNon200Response = errors.New("Non 200 Response found")
-)
+	/*
+		1 - Retrieve Gmail and Google Drive tokens from AWS Parameter Store
+		2 - Query Gmail:
+			a - Use specific date time range
+			b - for any attachments using the provided gmail search string
+		3 - For each match:
+			a - Connect to Google Drive and upload using date of email
+			b - Save information in a map/list
+		4 - Send confirmation email for the google drive account of files uploaded
+	 */
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	resp, err := http.Get(DefaultHTTPGetAddress)
-	if err != nil {
-		return events.APIGatewayProxyResponse{}, err
-	}
 
-	if resp.StatusCode != 200 {
-		return events.APIGatewayProxyResponse{}, ErrNon200Response
-	}
-
-	ip, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return events.APIGatewayProxyResponse{}, err
-	}
-
-	if len(ip) == 0 {
-		return events.APIGatewayProxyResponse{}, ErrNoIP
-	}
 
 	return events.APIGatewayProxyResponse{
 		Body:       fmt.Sprintf("GMAIL_OAUTH_TOKEN=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
