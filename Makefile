@@ -27,4 +27,10 @@ deploy:
 		--template-file $(cfn_output_file) \
 		--stack-name $(app_name) \
 		--capabilities CAPABILITY_IAM \
-		--parameter-overrides GmailSearchString=yolobaby GoogleDriveUploadFolder=gdrive
+		--parameter-overrides GmailSearchString=yolobaby \
+		                      GoogleDriveUploadFolder=gdrive \
+		                      GmailOAuthToken=andrew1 \
+		                      GoogleDriveOAuthToken=password
+
+invoke
+    aws lambda invoke --function-name gmail-attachments-to-gdrive-HelloWorldFunction-11ELVSJLFKVOI output.txt

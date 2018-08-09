@@ -42,7 +42,11 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	return events.APIGatewayProxyResponse{
-		Body:       fmt.Sprintf("Hello, %v", os.Getenv("GMAIL_SEARCH_QUERY")),
+		Body:       fmt.Sprintf("GMAIL_OAUTH_TOKEN=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
+			os.Getenv("GMAIL_OAUTH_TOKEN"),
+			os.Getenv("GMAIL_SEARCH_QUERY"),
+			os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"),
+			os.Getenv("GOOGLE_DRIVE_UPLOAD_FOLDER")),
 		StatusCode: 200,
 	}, nil
 }

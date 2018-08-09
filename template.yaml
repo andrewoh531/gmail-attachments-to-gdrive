@@ -12,9 +12,15 @@ Globals:
 
 
 Parameters:
+  GmailOAuthToken:
+    Description: AWS Parameter Store name that contains the Gmail OAuth token
+    Type: AWS::SSM::Parameter::Name
   GmailSearchString:
     Description: Gmail compatible search string
     Type: String
+  GoogleDriveOAuthToken:
+    Description: AWS Parameter Store name that contains the Google Drive OAuth token
+    Type: AWS::SSM::Parameter::Name
   GoogleDriveUploadFolder:
     Description: Folder to upload to within Google Drive
     Type: String
@@ -29,23 +35,12 @@ Resources:
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
       Events:
         CatchAll:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Schedule # More info about a schedule Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#schedule
           Properties:
-            Path: /hello
-            Method: GET
+            Schedule: cron(0 4 ? * SUN *) # Every Sunday at 4am UTC https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
+          GMAIL_OAUTH_TOKEN: !Ref GmailOAuthToken
           GMAIL_SEARCH_QUERY: !Ref GmailSearchString
-
-Outputs:
-  HelloWorldAPI:
-    Description: "API Gateway endpoint URL for Prod environment for First Function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-
-  HelloWorldFunction:
-    Description: "First Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+          GOOGLE_DRIVE_OAUTH_TOKEN: !Ref GoogleDriveOAuthToken
+          GOOGLE_DRIVE_UPLOAD_FOLDER: !Ref GoogleDriveUploadFolder
