@@ -13,6 +13,9 @@ clean:
 build:
 	GOOS=linux GOARCH=amd64 go build -o hello-world/hello-world ./hello-world
 
+run:
+	sam local start-api
+
 package:
 	sam package \
 		--template-file template.yaml \
