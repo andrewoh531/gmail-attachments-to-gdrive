@@ -26,4 +26,5 @@ deploy:
 	sam deploy \
 		--template-file $(cfn_output_file) \
 		--stack-name $(app_name) \
-		--capabilities CAPABILITY_IAM
+		--capabilities CAPABILITY_IAM \
+		--parameter-overrides GmailSearchString=yolobaby GoogleDriveUploadFolder=gdrive

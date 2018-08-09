@@ -15,11 +15,9 @@ Parameters:
   GmailSearchString:
     Description: Gmail compatible search string
     Type: String
-    Default: gmail-search-string
   GoogleDriveUploadFolder:
     Description: Folder to upload to within Google Drive
     Type: String
-    Default: google-drive-upload-folder
 
 Resources:
   HelloWorldFunction:
@@ -37,7 +35,7 @@ Resources:
             Method: GET
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          GMAIL_SEARCH_QUERY: urbanutilities
+          GMAIL_SEARCH_QUERY: !Ref GmailSearchString
 
 Outputs:
   HelloWorldAPI:
