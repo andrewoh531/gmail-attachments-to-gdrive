@@ -32,5 +32,5 @@ deploy:
 		                      GmailOAuthToken=andrew1 \
 		                      GoogleDriveOAuthToken=password
 
-invoke
-    aws lambda invoke --function-name gmail-attachments-to-gdrive-HelloWorldFunction-11ELVSJLFKVOI output.txt
+invoke:
+	aws lambda invoke --function-name gmail-attachments-to-gdrive-HelloWorldFunction-11ELVSJLFKVOI output.txt
