@@ -1,5 +1,6 @@
 # Variables
 cfn_output_file=cfn-template-output.yaml
+app_name=gmail-attachments-to-gdrive
 
 .PHONY: deps clean build
 
@@ -16,10 +17,10 @@ package:
 	sam package \
 		--template-file template.yaml \
 		--output-template-file $(cfn_output_file) \
-		--s3-bucket tax-file-aggregator
+		--s3-bucket $(app_name)
 
 deploy:
 	sam deploy \
 		--template-file $(cfn_output_file) \
-		--stack-name tax-file-aggregator \
+		--stack-name $(app_name) \
 		--capabilities CAPABILITY_IAM
