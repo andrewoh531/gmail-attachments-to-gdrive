@@ -10,6 +10,17 @@ Globals:
   Function:
     Timeout: 300 #5 minute timeout value
 
+
+Parameters:
+  GmailSearchString:
+    Description: Gmail compatible search string
+    Type: String
+    Default: gmail-search-string
+  GoogleDriveUploadFolder:
+    Description: Folder to upload to within Google Drive
+    Type: String
+    Default: google-drive-upload-folder
+
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction

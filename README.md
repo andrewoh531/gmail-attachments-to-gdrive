@@ -1,13 +1,3 @@
-# Discontinued
-This project has been discontinued because currently it's not possible 
-to create a Cloudformation template with parameters using SAM Local. This is something I'd need
-in order to create a [Launch Stack Url](https://aws.amazon.com/blogs/devops/construct-your-own-launch-stack-url/).
-
-Here is the [Stackoverflow](https://stackoverflow.com/questions/51758919/aws-cloudformation-template-parameters-for-sam-local) 
-question where I've asked this question.
-
-
-
 # sam-app
 
 This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:
