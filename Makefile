@@ -20,13 +20,13 @@ test:
 run:
 	sam local start-api
 
-package:
+package: build
 	sam package \
 		--template-file template.yaml \
 		--output-template-file $(cfn_output_file) \
 		--s3-bucket $(app_name)
 
-deploy:
+deploy: package
 	sam deploy \
 		--template-file $(cfn_output_file) \
 		--stack-name $(app_name) \
