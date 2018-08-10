@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ssm"
 
-	"personal/gmail-attachments-to-gdrive/hello-world/clients"
+	"personal/gmail-attachments-to-gdrive/src/clients"
 )
 
 func retrieveFromParameterStore(key string) string {
@@ -20,7 +20,7 @@ func retrieveFromParameterStore(key string) string {
 	})
 
 	if err != nil {
-		fmt.Printf("Error retrieving SSM (%s): ", key, err)
+		fmt.Printf("Error retrieving SSM (%s): %v", key, err)
 		os.Exit(1)
 	}
 

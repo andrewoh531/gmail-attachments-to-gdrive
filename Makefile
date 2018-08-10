@@ -1,6 +1,7 @@
 # Variables
 cfn_output_file=cfn-template-output.yaml
 app_name=gmail-attachments-to-gdrive
+artifact_name=gmail-attacher
 
 .PHONY: deps clean build
 
@@ -8,13 +9,13 @@ deps:
 	go get -u ./...
 
 clean: 
-	rm -rf ./hello-world/hello-world
+	rm -rf ./$(artifact_name)
 	
 build:
-	GOOS=linux GOARCH=amd64 go build -o hello-world/hello-world ./hello-world
+	GOOS=linux GOARCH=amd64 go build -o src/$(artifact_name) ./src/
 
 test:
-	go test -v ./hello-world/
+	go test -v ./src/
 
 run:
 	sam local start-api
@@ -36,4 +37,4 @@ deploy:
 		                      GoogleDriveOAuthToken=password
 
 invoke:
-	aws lambda invoke --function-name gmail-attachments-to-gdrive-HelloWorldFunction-11ELVSJLFKVOI output.txt
+	aws lambda invoke --function-name gmail-attachments-to-gdri-RetrieveFromGmailUploadT-17R7DXPILYMG4 output.txt
