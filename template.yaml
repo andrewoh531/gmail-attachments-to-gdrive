@@ -33,6 +33,7 @@ Resources:
       Handler: gmail-attacher
       Runtime: go1.x
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Role: !GetAtt IamRole.Arn
       Events:
         CatchAll:
           Type: Schedule # More info about a schedule Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#schedule
@@ -44,3 +45,20 @@ Resources:
           GMAIL_SEARCH_QUERY: !Ref GmailSearchString
           GOOGLE_DRIVE_OAUTH_TOKEN: !Ref GoogleDriveOAuthToken
           GOOGLE_DRIVE_UPLOAD_FOLDER: !Ref GoogleDriveUploadFolder
+  IamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        -
+          Effect: "Allow"
+          Principal:
+            Service:
+            - "lambda.amazonaws.com"
+          Action:
+          - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
