@@ -2,14 +2,29 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"os"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ssm"
+
+	"personal/gmail-attachments-to-gdrive/hello-world/clients"
 )
 
 func retrieveFromParameterStore(key string) string {
-	return "Yo"
+
+	output, err := clients.GetSsmClient().GetParameter(&ssm.GetParameterInput{
+		Name:           &key,
+		WithDecryption: aws.Bool(true),
+	})
+
+	if err != nil {
+		fmt.Printf("Error retrieving SSM (%s): ", key, err)
+		os.Exit(1)
+	}
+
+	return *output.Parameter.Value
 }
 
 func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, error) {
@@ -25,8 +40,8 @@ func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, er
 		4 - Send confirmation email for the google drive account of files uploaded
 	 */
 
-	 gmailOAuthToken := retrieveFromParameterStore(os.Getenv("GMAIL_OAUTH_TOKEN"))
-	 googleDriveOAuthToken := retrieveFromParameterStore(os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
+	gmailOAuthToken := retrieveFromParameterStore(os.Getenv("GMAIL_OAUTH_TOKEN"))
+	googleDriveOAuthToken := retrieveFromParameterStore(os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
 
 	return events.APIGatewayProxyResponse{
 		Body: fmt.Sprintf("GMAIL_OAUTH_TOKEN=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
