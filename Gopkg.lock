@@ -2,7 +2,7 @@
 
 
 [[projects]]
-  digest = "1:f0c0a49ebbd24f487b069e1b5e42e4c48f848734b2a7af73bae08418859106b9"
+  digest = "1:014e79cf5c422dd0547a87bde33c7f7b3cd29116a96fac8897c7e50f18531dea"
   name = "github.com/aws/aws-lambda-go"
   packages = [
     "events",
@@ -11,11 +11,11 @@
     "lambdacontext",
   ]
   pruneopts = "UT"
-  revision = "e630af386f8aad6ec9fc899b951cf62d37cfe56f"
-  version = "v1.4.0"
+  revision = "2d482ef09017ae953b1e8d5a6ddac5b696663a3c"
+  version = "v1.6.0"
 
 [[projects]]
-  digest = "1:d0d7c7a3558ec05969c7375771f2a6c2d5cdf1efe49df6331d53c83b9fc94490"
+  digest = "1:b178dbae2280f9266fa4f4b41f1ce8d3cc55238e730f39ff58a744093d40631e"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -47,11 +47,12 @@
     "private/protocol/rest",
     "private/protocol/xml/xmlutil",
     "service/ssm",
+    "service/ssm/ssmiface",
     "service/sts",
   ]
   pruneopts = "UT"
-  revision = "859b69a01f8cb52b639bd8c868b116144bddc74a"
-  version = "v1.15.9"
+  revision = "ca229c7730be9278527fbb287f5a26c91e328d86"
+  version = "v1.15.15"
 
 [[projects]]
   digest = "1:fe8a03a8222d5b913f256972933d26d24ad7c8286692a42943bc01633cc8fce3"
@@ -74,9 +75,9 @@
   input-imports = [
     "github.com/aws/aws-lambda-go/events",
     "github.com/aws/aws-lambda-go/lambda",
-    "github.com/aws/aws-sdk-go/aws",
     "github.com/aws/aws-sdk-go/aws/session",
     "github.com/aws/aws-sdk-go/service/ssm",
+    "github.com/aws/aws-sdk-go/service/ssm/ssmiface",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
