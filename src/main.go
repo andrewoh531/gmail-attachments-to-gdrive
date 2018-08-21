@@ -10,6 +10,8 @@ import (
 	"github.com/andrewoh531/gmail-attachments-to-gdrive/src/clients"
 )
 
+// For mocking
+var retrieveParameter = clients.RetrieveFromParameterStore
 
 
 func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, error) {
@@ -25,8 +27,8 @@ func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, er
 		4 - Send confirmation email for the google drive account of files uploaded
 	 */
 	ssmClient := clients.GetSsmClient()
-	gmailOAuthToken := clients.RetrieveFromParameterStore(ssmClient, os.Getenv("GMAIL_OAUTH_TOKEN"))
-	googleDriveOAuthToken := clients.RetrieveFromParameterStore(ssmClient, os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
+	gmailOAuthToken := retrieveParameter(ssmClient, os.Getenv("GMAIL_OAUTH_TOKEN"))
+	googleDriveOAuthToken := retrieveParameter(ssmClient, os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
 
 	return events.APIGatewayProxyResponse{
 		Body: fmt.Sprintf("GMAIL_OAUTH_TOKEN=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
