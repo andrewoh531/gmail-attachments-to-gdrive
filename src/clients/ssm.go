@@ -4,26 +4,27 @@ import (
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"sync"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/aws"
 	"fmt"
 	"os"
+	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/aws/aws-sdk-go/aws"
 )
 
 var ssmClient *ssm.SSM
 var once sync.Once
 
 // Retrieve a single instance of an SSM Client
-func getSsmClient() *ssm.SSM {
+func GetSsmClient() *ssm.SSM {
 	once.Do(func() {
 		sess := session.Must(session.NewSession())
-		ssmClient = ssm.New(sess, aws.NewConfig())
+		ssmClient = ssm.New(sess)
 	})
 	return ssmClient
 }
 
-func RetrieveFromParameterStore(key string) string {
+func RetrieveFromParameterStore(ssmClient ssmiface.SSMAPI, key string) string {
 
-	output, err := getSsmClient().GetParameter(&ssm.GetParameterInput{
+	output, err := ssmClient.GetParameter(&ssm.GetParameterInput{
 		Name:           &key,
 		WithDecryption: aws.Bool(true),
 	})

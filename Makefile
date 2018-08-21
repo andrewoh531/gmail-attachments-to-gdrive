@@ -15,7 +15,7 @@ build:
 	GOOS=linux GOARCH=amd64 go build -o src/$(artifact_name) ./src/
 
 test:
-	go test -v ./src/
+	go test -v ./src/...
 
 run:
 	sam local start-api

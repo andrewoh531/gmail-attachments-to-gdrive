@@ -6,22 +6,20 @@ import (
 	//"net/http/httptest"
 	"testing"
 
-	"fmt"
-	"github.com/aws/aws-lambda-go/events"
-)
+		)
 
 func TestHandler(t *testing.T) {
 
-	// TODO This is an integration test (Ideally should stub/mock out calls to AWS)
-	t.Run("Should retrieve SSM", func(t *testing.T) {
-
-		response := retrieveFromParameterStore("andrew1")
-		fmt.Print(response)
-		_, err := handler(events.CloudWatchEvent{})
-		if err == nil {
-			t.Fatal("Error failed to trigger with an invalid request")
-		}
-	})
+	//// TODO This is an integration test (Ideally should stub/mock out calls to AWS)
+	//t.Run("Should retrieve SSM", func(t *testing.T) {
+	//
+	//	response := retrieveFromParameterStore("andrew1")
+	//	fmt.Print(response)
+	//	_, err := handler(events.CloudWatchEvent{})
+	//	if err == nil {
+	//		t.Fatal("Error failed to trigger with an invalid request")
+	//	}
+	//})
 
 
 	//t.Run("Unable to get IP", func(t *testing.T) {

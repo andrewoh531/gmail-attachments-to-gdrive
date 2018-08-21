@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 
-	"personal/gmail-attachments-to-gdrive/src/clients"
+	"github.com/andrewoh531/gmail-attachments-to-gdrive/src/clients"
 )
 
 
@@ -24,9 +24,9 @@ func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, er
 			b - Save information in a map/list
 		4 - Send confirmation email for the google drive account of files uploaded
 	 */
-
-	gmailOAuthToken := clients.RetrieveFromParameterStore(os.Getenv("GMAIL_OAUTH_TOKEN"))
-	googleDriveOAuthToken := clients.RetrieveFromParameterStore(os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
+	ssmClient := clients.GetSsmClient()
+	gmailOAuthToken := clients.RetrieveFromParameterStore(ssmClient, os.Getenv("GMAIL_OAUTH_TOKEN"))
+	googleDriveOAuthToken := clients.RetrieveFromParameterStore(ssmClient, os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
 
 	return events.APIGatewayProxyResponse{
 		Body: fmt.Sprintf("GMAIL_OAUTH_TOKEN=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
