@@ -5,8 +5,7 @@ import (
 	//"net/http"
 	//"net/http/httptest"
 	"testing"
-
-		)
+)
 
 func TestHandler(t *testing.T) {
 
@@ -20,7 +19,6 @@ func TestHandler(t *testing.T) {
 	//		t.Fatal("Error failed to trigger with an invalid request")
 	//	}
 	//})
-
 
 	//t.Run("Unable to get IP", func(t *testing.T) {
 	//	DefaultHTTPGetAddress = "http://127.0.0.1:12345"

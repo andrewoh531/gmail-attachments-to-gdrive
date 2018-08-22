@@ -3,16 +3,17 @@ package main
 import (
 	"fmt"
 	"os"
-
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
-
 	"github.com/andrewoh531/gmail-attachments-to-gdrive/src/clients"
+	"github.com/aws/aws-lambda-go/lambda"
 )
+
+func main() {
+	lambda.Start(handler)
+}
 
 // For mocking
 var retrieveParameter = clients.RetrieveFromParameterStore
-
 
 func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, error) {
 
@@ -38,8 +39,4 @@ func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, er
 			os.Getenv("GOOGLE_DRIVE_UPLOAD_FOLDER")),
 		StatusCode: 200,
 	}, nil
-}
-
-func main() {
-	lambda.Start(handler)
 }
