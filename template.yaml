@@ -12,8 +12,11 @@ Globals:
 
 
 Parameters:
-  GmailOAuthToken:
-    Description: AWS Parameter Store name that contains the Gmail OAuth token
+  GmailOAuthAccessTokenName:
+    Description: AWS Parameter Store name that contains the Gmail OAuth access token
+    Type: AWS::SSM::Parameter::Name
+  GmailOAuthRefreshTokenName:
+    Description: AWS Parameter Store name that contains the Gmail OAuth refresh token
     Type: AWS::SSM::Parameter::Name
   GmailSearchString:
     Description: Gmail compatible search string
@@ -41,7 +44,8 @@ Resources:
             Schedule: cron(0 4 ? * SUN *) # Every Sunday at 4am UTC https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          GMAIL_OAUTH_TOKEN: !Ref GmailOAuthToken
+          GMAIL_OAUTH_ACCESS_TOKEN_NAME: !Ref GmailOAuthAccessTokenName
+          GMAIL_OAUTH_REFRESH_TOKEN_NAME: !Ref GmailOAuthRefreshTokenName
           GMAIL_SEARCH_QUERY: !Ref GmailSearchString
           GOOGLE_DRIVE_OAUTH_TOKEN: !Ref GoogleDriveOAuthToken
           GOOGLE_DRIVE_UPLOAD_FOLDER: !Ref GoogleDriveUploadFolder

@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:5c3894b2aa4d6bead0ceeea6831b305d62879c871780e7b76296ded1b004bc57"
+  name = "cloud.google.com/go"
+  packages = ["compute/metadata"]
+  pruneopts = "UT"
+  revision = "64a2037ec6be8a4b0c1d1f706ed35b428b989239"
+  version = "v0.26.0"
+
+[[projects]]
   digest = "1:014e79cf5c422dd0547a87bde33c7f7b3cd29116a96fac8897c7e50f18531dea"
   name = "github.com/aws/aws-lambda-go"
   packages = [
@@ -98,11 +106,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:363b547c971a2b07474c598b6e9ebcb238d556d8a27f37b3895ad20cd50e7281"
+  digest = "1:f645667d687fc8bf228865a2c5455824ef05bad08841e673673ef2bb89ac5b90"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
+    "google",
     "internal",
+    "jws",
+    "jwt",
   ]
   pruneopts = "UT"
   revision = "d2e6202438beef2727060aa7cabdd924d92ebfd9"
@@ -121,13 +132,16 @@
   revision = "0873c9a91f718ab0bcccfabaf9ce3ada04f9dc7b"
 
 [[projects]]
-  digest = "1:328b5e4f197d928c444a51a75385f4b978915c0e75521f0ad6a3db976c97a7d3"
+  digest = "1:c8907869850adaa8bd7631887948d0684f3787d0912f1c01ab72581a6c34432e"
   name = "google.golang.org/appengine"
   packages = [
+    ".",
     "internal",
+    "internal/app_identity",
     "internal/base",
     "internal/datastore",
     "internal/log",
+    "internal/modules",
     "internal/remote_api",
     "internal/urlfetch",
     "urlfetch",
@@ -147,7 +161,9 @@
     "github.com/aws/aws-sdk-go/service/ssm",
     "github.com/aws/aws-sdk-go/service/ssm/ssmiface",
     "github.com/pkg/errors",
+    "golang.org/x/net/context",
     "golang.org/x/oauth2",
+    "golang.org/x/oauth2/google",
     "google.golang.org/api/gmail/v1",
   ]
   solver-name = "gps-cdcl"

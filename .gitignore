@@ -13,3 +13,5 @@ output.txt
 
 # Cloudformation template generated
 cfn-template-output.yaml
+
+credentials.json

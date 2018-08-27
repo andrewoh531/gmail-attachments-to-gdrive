@@ -3,8 +3,6 @@ cfn_output_file=cfn-template-output.yaml
 app_name=gmail-attachments-to-gdrive
 artifact_name=gmail-attacher
 
-.PHONY: deps clean build
-
 deps:
 	go get -u ./...
 
@@ -33,8 +31,15 @@ deploy: package
 		--capabilities CAPABILITY_IAM \
 		--parameter-overrides GmailSearchString=yolobaby \
 		                      GoogleDriveUploadFolder=gdrive \
-		                      GmailOAuthToken=andrew1 \
+		                      GmailOAuthAccessTokenName=tax-helper-gmail-access-token-name \
+		                      GmailOAuthRefreshTokenName=tax-helper-gmail-refresh-token-name \
 		                      GoogleDriveOAuthToken=password
 
 invoke:
 	aws lambda invoke --function-name gmail-attachments-to-gdri-RetrieveFromGmailUploadT-17R7DXPILYMG4 output.txt
+
+invoke-local:
+	echo '{"message": "Hey, are you there?" }' | sam local invoke --env-vars env.json "RetrieveFromGmailUploadToGDrive"
+
+
+.PHONY: deps clean build invoke invoke-local
