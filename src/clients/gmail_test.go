@@ -21,9 +21,8 @@ func Test_getStartDate(t *testing.T) {
 }
 
 
-func Test_retrieve(t *testing.T) {
-
-	t.Run("testing retrieve", func(t *testing.T) {
-		Retrieve("access-token","refresh-token")
-	})
-}
+//func Test_retrieve(t *testing.T) {
+//	t.Run("testing retrieve", func(t *testing.T) {
+//		Retrieve("dummy-refresh")
+//	})
+//}

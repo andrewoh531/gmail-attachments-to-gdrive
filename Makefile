@@ -29,17 +29,17 @@ deploy: package
 		--template-file $(cfn_output_file) \
 		--stack-name $(app_name) \
 		--capabilities CAPABILITY_IAM \
-		--parameter-overrides GmailSearchString=yolobaby \
-		                      GoogleDriveUploadFolder=gdrive \
-		                      GmailOAuthAccessTokenName=tax-helper-gmail-access-token-name \
-		                      GmailOAuthRefreshTokenName=tax-helper-gmail-refresh-token-name \
-		                      GoogleDriveOAuthToken=password
+		--parameter-overrides \
+            GmailSearchString=yolobaby \
+            GmailClientCredentialName=gmail-client-credentials \
+            GoogleDriveUploadFolder=gdrive \
+            GmailOAuthRefreshTokenName=tax-helper-gmail-refresh-token-name \
+            GoogleDriveOAuthToken=password
 
 invoke:
-	aws lambda invoke --function-name gmail-attachments-to-gdri-RetrieveFromGmailUploadT-17R7DXPILYMG4 output.txt
+	aws lambda invoke --function-name gmail-attachments-to-gdri-RetrieveFromGmailUploadT-17R7DXPILYMG4 output.log && cat output.log
 
 invoke-local:
-	echo '{"message": "Hey, are you there?" }' | sam local invoke --env-vars env.json "RetrieveFromGmailUploadToGDrive"
+	echo '{}' | sam local invoke --env-vars env.json "RetrieveFromGmailUploadToGDrive" --log-file output.log && cat output.log
 
-
-.PHONY: deps clean build invoke invoke-local
+.PHONY: deps clean build package deploy invoke invoke-local

@@ -17,6 +17,7 @@ This is a sample template for sam-app - Below is a brief explanation of what we 
 * AWS CLI already configured with at least PowerUser permission
 * [Docker installed](https://www.docker.com/community-edition)
 * [Golang](https://golang.org)
+* Sensitive credentials will need to be pushed to AWS Parameter Store
 
 ## Setup process
 
@@ -29,6 +30,14 @@ go get -u github.com/aws/aws-lambda-go/...
 ```
 
 **NOTE:** As you change your application code as well as dependencies during development, you might want to research how to handle dependencies in Golang at scale.
+
+## Setting Up AWS Parameter Store
+The following credentials/keys will need to be stored in AWS Parameter Store as secure strings 
+using the default KMS keys:
+- Gmail client credentials: This is a JSON file but you can copy the contents as a secure string.
+  You can retrieve the JSON credentials from the [Google developer console page](https://console.developers.google.com/apis/credentials)
+- GMail user's refresh token: The OAuth2 refresh token is used to authorize the application to search your gmail account. 
+  [Here](https://github.com/andrewoh531/gmail-authenticator) is sample app that can do this for you.
 
 ### Building
 

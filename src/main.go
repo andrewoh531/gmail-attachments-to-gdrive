@@ -28,15 +28,15 @@ func handler(request events.CloudWatchEvent) (events.APIGatewayProxyResponse, er
 		4 - Send confirmation email for the google drive account of files uploaded
 	 */
 	ssmClient := clients.GetSsmClient()
-	gmailOAuthAccessToken := retrieveParameter(ssmClient, os.Getenv("GMAIL_OAUTH_ACCESS_TOKEN_NAME"))
+	gmailClientCredentials := retrieveParameter(ssmClient, os.Getenv("GMAIL_CLIENT_CREDENTIAL_NAME"))
 	gmailOAuthRefreshToken := retrieveParameter(ssmClient, os.Getenv("GMAIL_OAUTH_REFRESH_TOKEN_NAME"))
 	googleDriveOAuthToken := retrieveParameter(ssmClient, os.Getenv("GOOGLE_DRIVE_OAUTH_TOKEN"))
 
-	clients.Retrieve(gmailOAuthAccessToken, gmailOAuthRefreshToken)
+	clients.Retrieve(gmailClientCredentials, gmailOAuthRefreshToken)
 
 	return events.APIGatewayProxyResponse{
-		Body: fmt.Sprintf("GMAIL_OAUTH_ACCESS_TOKEN_NAME=%v, GMAIL_OAUTH_REFRESH_TOKEN_NAME=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
-			gmailOAuthAccessToken,
+		Body: fmt.Sprintf("GMAIL_CLIENT_CREDENTIALS=%v, GMAIL_OAUTH_REFRESH_TOKEN_NAME=%v, GMAIL_SEARCH_QUERY=%v, GOOGLE_DRIVE_OAUTH_TOKEN=%v, GOOGLE_DRIVE_UPLOAD_FOLDER=%v",
+			gmailClientCredentials,
 			gmailOAuthRefreshToken,
 			os.Getenv("GMAIL_SEARCH_QUERY"),
 			googleDriveOAuthToken,

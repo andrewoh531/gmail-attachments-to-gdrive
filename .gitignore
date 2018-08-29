@@ -1,9 +1,10 @@
-# Generated Golang binaries
+# Generated Golang binaries/files
 ./bin/
 dlv
 hello-world
 gmail-attacher
 output.txt
+output.log
 
 # IntelliJ files (https://intellij-support.jetbrains.com/hc/en-us/articles/206544839)
 .idea/workspace.xml

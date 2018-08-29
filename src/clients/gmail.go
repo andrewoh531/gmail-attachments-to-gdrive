@@ -6,31 +6,27 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/api/gmail/v1"
 	"golang.org/x/oauth2/google"
-	"io/ioutil"
 	"log"
 	"fmt"
 )
 
-func Retrieve(accessToken string, refreshToken string) {
-	// TODO obtain credentials in a deployable way (cannot check in credentials.json)
-	b, err := ioutil.ReadFile("credentials.json")
-	if err != nil {
-		log.Fatalf("Unable to read client secret file: %v", err)
-	}
+func Retrieve(gmailClientCredentials string, refreshToken string) {
 
-	config, err := google.ConfigFromJSON(b, gmail.GmailReadonlyScope)
+	config, err := google.ConfigFromJSON([]byte(gmailClientCredentials), gmail.GmailReadonlyScope)
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
 	}
 
+	// This is somewhat of a hack as we aren't storing the access token and
+	// relying on the refresh token to obtain a new session every time
 	srv, err := gmail.New(config.Client(context.Background(), &oauth2.Token{
-		AccessToken: accessToken,
+		AccessToken: "invalid-token-to-rely-on-refresh-token",
 		TokenType: "Bearer",
 		RefreshToken: refreshToken,
+		Expiry: time.Unix(0, 0), // Already expired to force use of refresh token
 	}))
 
-	user := "me"
-	r, err := srv.Users.Labels.List(user).Do()
+	r, err := srv.Users.Labels.List("me").Do()
 
 	if err != nil {
 		log.Fatalf("Unable to retrieve labels: %v", err)

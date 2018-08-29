@@ -12,8 +12,8 @@ Globals:
 
 
 Parameters:
-  GmailOAuthAccessTokenName:
-    Description: AWS Parameter Store name that contains the Gmail OAuth access token
+  GmailClientCredentialName:
+    Description: AWS Parameter Store name that holds the JSON client credentials for gmail
     Type: AWS::SSM::Parameter::Name
   GmailOAuthRefreshTokenName:
     Description: AWS Parameter Store name that contains the Gmail OAuth refresh token
@@ -44,7 +44,7 @@ Resources:
             Schedule: cron(0 4 ? * SUN *) # Every Sunday at 4am UTC https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          GMAIL_OAUTH_ACCESS_TOKEN_NAME: !Ref GmailOAuthAccessTokenName
+          GMAIL_CLIENT_CREDENTIAL_NAME: !Ref GmailClientCredentialName
           GMAIL_OAUTH_REFRESH_TOKEN_NAME: !Ref GmailOAuthRefreshTokenName
           GMAIL_SEARCH_QUERY: !Ref GmailSearchString
           GOOGLE_DRIVE_OAUTH_TOKEN: !Ref GoogleDriveOAuthToken
